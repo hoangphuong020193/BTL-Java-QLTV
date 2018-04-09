@@ -53,6 +53,9 @@ public class TrangChuController implements Initializable {
 
     @FXML
     private void onClickTraCuu(MouseEvent event) {
+        FXMLLoader loader = navigatePage(event, "TraCuu.fxml", "Tra cứu sách");
+        TraCuuController controller = loader.getController();
+        controller.setNhanVien(nhanVien);
     }
 
     @FXML

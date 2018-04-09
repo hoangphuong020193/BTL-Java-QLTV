@@ -8,6 +8,7 @@ package quanlythuvien;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import model.NhanVienDangNhap;
 
 /**
  * FXML Controller class
@@ -16,12 +17,17 @@ import javafx.fxml.Initializable;
  */
 public class TraCuuController implements Initializable {
 
+    private NhanVienDangNhap nhanVien;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
+    public void setNhanVien(NhanVienDangNhap nv) {
+        nhanVien = nv;
+    }
 }

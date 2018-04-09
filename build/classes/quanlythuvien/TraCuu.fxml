@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="109.0" prefWidth="866.0" style="-fx-background-color: #FAFAFB;">
+         <children>
+            <VBox prefHeight="89.0" prefWidth="279.0" spacing="5.0">
+               <children>
+                  <Label text="Mã sách" />
+                  <TextField />
+                  <Label text="Tác giả" />
+                  <ComboBox prefHeight="25.0" prefWidth="320.0" />
+               </children>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="117.0" prefWidth="275.0" spacing="5.0">
+               <children>
+                  <Label text="Tên sách" />
+                  <TextField />
+                  <Label text="Loại sách" />
+                  <ComboBox prefHeight="25.0" prefWidth="284.0" />
+               </children>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="136.0" prefWidth="313.0" spacing="5.0">
+               <children>
+                  <Label text="Ngày nhập" />
+                  <DatePicker prefHeight="25.0" prefWidth="305.0" />
+                  <Label text="Nhà xuất bản" />
+                  <ComboBox prefHeight="25.0" prefWidth="307.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="72.0" prefWidth="866.0" spacing="15.0">
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: #0095FF;" text="Tim kiếm" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" text="Xoá">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <TableView prefHeight="403.0" prefWidth="866.0">
+        <columns>
+          <TableColumn prefWidth="150.0" text="Mã sách" />
+          <TableColumn minWidth="0.0" prefWidth="177.0" text="Tên sách" />
+            <TableColumn prefWidth="130.0" text="Loại sách" />
+            <TableColumn prefWidth="147.0" text="Tác giả" />
+            <TableColumn prefWidth="123.0" text="Nhà xuất bản" />
+            <TableColumn prefWidth="105.0" text="Ngày nhập" />
+        </columns>
+      </TableView>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
