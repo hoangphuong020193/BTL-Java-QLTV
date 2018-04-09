@@ -76,6 +76,11 @@
                     <children>
                         <Label text="Tìm kiếm" />
                         <TextField fx:id="txtTimKiem" onKeyPressed="#onKeyPressSearch" prefHeight="25.0" prefWidth="462.0" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="243.0">
+                     <children>
+                        <CheckBox fx:id="chkShowDGDeleted" mnemonicParsing="false" onMouseClicked="#onClickCheckboxHienDG" text="Hiện độc giả đã xoá" />
+                     </children>
+                  </HBox>
                     </children>
                 </HBox>
                 <TableView fx:id="tbvDocGia" onMouseClicked="#onSelectDocGia" prefHeight="381.0" prefWidth="734.0">
@@ -85,7 +90,6 @@
                         <TableColumn fx:id="colTenLot" prefWidth="147.0" text="Tên lót" />
                         <TableColumn fx:id="colTen" prefWidth="95.0" text="Tên" />
                         <TableColumn fx:id="colNgayTao" prefWidth="102.0" text="Ngày tạo" />
-                        <TableColumn fx:id="colXoa" prefWidth="53.0" text="Xoá" />
                     </columns>
                 </TableView>
             </children>

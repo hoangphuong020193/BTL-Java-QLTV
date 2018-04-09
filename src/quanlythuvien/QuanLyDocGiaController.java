@@ -17,22 +17,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import model.NhanVienDangNhap;
 
 /**
@@ -53,22 +58,9 @@ public class QuanLyDocGiaController implements Initializable {
     @FXML
     private Button btnSave;
     @FXML
-    private Button bynHuy;
-    @FXML
     private TextField txtTimKiem;
     @FXML
     private TableView<DocGia> tbvDocGia;
-    @FXML
-    private ImageView imgHome;
-
-    private Connection connect;
-    private NhanVienDangNhap nhanVien;
-    private DocGia docGiaSelected;
-    private String maDG = "";
-    private String ho = "";
-    private String tenLot = "";
-    private String ten = "";
-    private String searchString = "";
     @FXML
     private TableColumn<DocGia, String> colMaDG;
     @FXML
@@ -80,7 +72,16 @@ public class QuanLyDocGiaController implements Initializable {
     @FXML
     private TableColumn<DocGia, Date> colNgayTao;
     @FXML
-    private TableColumn<DocGia, Boolean> colXoa;
+    private CheckBox chkShowDGDeleted;
+
+    private Connection connect;
+    private NhanVienDangNhap nhanVien;
+    private DocGia docGiaSelected;
+    private String maDG = "";
+    private String ho = "";
+    private String tenLot = "";
+    private String ten = "";
+    private String searchString = "";
 
     /**
      * Initializes the controller class.
@@ -146,24 +147,54 @@ public class QuanLyDocGiaController implements Initializable {
         txtTen.setText(docGiaSelected.getTen());
     }
 
+    @FXML
+    private void onClickCheckboxHienDG(MouseEvent event) {
+        getListDocGia();
+    }
+
     private void initTableView() {
         colMaDG.setCellValueFactory(new PropertyValueFactory<>("MaDocGia"));
         colHo.setCellValueFactory(new PropertyValueFactory<>("Ho"));
         colTenLot.setCellValueFactory(new PropertyValueFactory<>("TenLot"));
         colTen.setCellValueFactory(new PropertyValueFactory<>("Ten"));
         colNgayTao.setCellValueFactory(new PropertyValueFactory<>("NgayTao"));
-        colXoa.setCellValueFactory(new PropertyValueFactory<>("Xoa"));
+
+        TableColumn<DocGia, DocGia> colXoa = new TableColumn<>("");
+        colXoa.setSortable(false);
+        colXoa.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
+        colXoa.setCellFactory(
+                new Callback<TableColumn<DocGia, DocGia>, TableCell<DocGia, DocGia>>() {
+
+            @Override
+            public TableCell<DocGia, DocGia> call(TableColumn<DocGia, DocGia> p) {
+                return new ButtonCell();
+            }
+        });
+
+        tbvDocGia.getColumns().add(colXoa);
         getListDocGia();
     }
 
     private void getListDocGia() {
         String query = "SELECT * FROM doc_gia";
+
+        if (!chkShowDGDeleted.isSelected()) {
+            query = query + " WHERE Xoa = 0 ";
+        }
+
         if (!searchString.equals("")) {
-            query = query + " WHERE MaDocGia LIKE ? "
+
+            if (chkShowDGDeleted.isSelected()) {
+                query = query + " WHERE ";
+            } else {
+                query = query + " AND ";
+            }
+
+            query = query + " (MaDocGia LIKE ? "
                     + "OR Ho LIKE ? "
                     + "OR TenLot LIKE ? "
                     + "OR Ten LIKE ? "
-                    + "OR CONCAT(Ho, ' ', TenLot, ' ', Ten) = ? ";
+                    + "OR CONCAT(Ho, ' ', TenLot, ' ', Ten) = ?) ";
         }
 
         try {
@@ -247,6 +278,54 @@ public class QuanLyDocGiaController implements Initializable {
                 getListDocGia();
                 Dialog.infoBox("Chỉnh sửa độc giả thành công", "Sửa độc giả", null);
             }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    private class ButtonCell extends TableCell<DocGia, DocGia> {
+
+        final Button cellButton = new Button("Xoá");
+
+        ButtonCell() {
+
+            cellButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent t) {
+                    Dialog.confirmBox("Bạn có muốn xoá độc giả này?", "Xóa", null)
+                            .ifPresent(response -> {
+                                if (response == ButtonType.OK) {
+                                    docGiaSelected = (DocGia) ButtonCell.this.getTableView()
+                                            .getItems()
+                                            .get(ButtonCell.this.getIndex());
+                                    XoaDG();
+                                }
+                            });
+                }
+            });
+        }
+
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(DocGia t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty && !t.getXoa()) {
+                setGraphic(cellButton);
+            } else {
+                setGraphic(null);
+            }
+        }
+    }
+
+    private void XoaDG() {
+        String query = "UPDATE doc_gia SET Xoa = 1 WHERE Id = ?";
+        try {
+            PreparedStatement prep = connect.prepareStatement(query);
+            prep.setInt(1, docGiaSelected.getId());
+            prep.executeUpdate();
+            getListDocGia();
+            Dialog.infoBox("Xoá độc giả thành công", "Xoá", null);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
