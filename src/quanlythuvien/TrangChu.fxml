@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="649.0" style="-fx-background-color: #FAFAFB;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.TrangChuController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="320.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="324.0" minWidth="10.0" prefWidth="319.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="151.0" minHeight="7.0" prefHeight="59.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="292.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="639.0" style="-fx-background-color: #007183;" GridPane.columnSpan="2">
+            <children>
+                <Label prefHeight="35.0" prefWidth="497.0" text="QUẢN LÝ THƯ VIỆN" textFill="WHITE">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbNVDangNhap" alignment="CENTER" text="Chào, Phương" textFill="#f5f5f5">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <padding>
+                <Insets left="5.0" right="5.0" />
+            </padding>
+        </HBox>
+        <VBox alignment="CENTER" onMouseClicked="#onClickQLDG" prefHeight="149.0" prefWidth="214.0" style="-fx-background-color: #F7682C;" GridPane.rowIndex="2">
+            <children>
+                <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/add-card.png" />
+                    </image>
+                </ImageView>
+                <Label text="Quản lý đọc giả" textFill="#fffdfd">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </VBox>
+        <VBox alignment="CENTER" onMouseClicked="#onClickQLS" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #90BC8B;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <children>
+                <ImageView fitHeight="105.0" fitWidth="124.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/add-book.png" />
+                    </image>
+                </ImageView>
+                <Label text="Quản lý sách" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </VBox>
+        <VBox alignment="CENTER" onMouseClicked="#onClickTraCuu" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #90BC8B;" GridPane.rowIndex="3">
+            <children>
+                <ImageView fitHeight="90.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/search.png" />
+                    </image>
+                </ImageView>
+                <Label text="Tra cứu sách" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </VBox>
+        <VBox alignment="CENTER" onMouseClicked="#onClickMuonSach" prefHeight="129.0" prefWidth="319.0" style="-fx-background-color: #90BC8B;" GridPane.rowIndex="1">
+            <children>
+                <ImageView fitHeight="92.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/borrow-book.png" />
+                    </image>
+                </ImageView>
+                <Label text="Mượn sách" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </VBox>
+        <VBox alignment="CENTER" onMouseClicked="#onClickBaoCao" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F7682C;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <children>
+                <ImageView fitHeight="88.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/report.png" />
+                    </image>
+                </ImageView>
+                <Label text="Báo cáo - Thống kê" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </VBox>
+        <VBox alignment="CENTER" onMouseClicked="#onClickTraSach" prefHeight="149.0" prefWidth="214.0" style="-fx-background-color: #F7682C;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <ImageView fitHeight="92.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/borrow-book.png" />
+                    </image>
+                </ImageView>
+                <Label text="Trả sách" textFill="#fffdfd">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</GridPane>

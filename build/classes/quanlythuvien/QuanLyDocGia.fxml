@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="1095.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.QuanLyDocGiaController">
+    <children>
+        <VBox prefHeight="416.0" prefWidth="311.0" spacing="5.0" style="-fx-border-width: 0 1 0 0; -fx-background-color: #FAFAFB;">
+            <children>
+                <StackPane prefHeight="62.0" prefWidth="164.0">
+                    <children>
+                        <ImageView fitHeight="83.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../image/reader-user.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </StackPane>
+                <Label text="Mã độc giả">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="txtMaDG" editable="false" />
+                <HBox prefHeight="25.0" prefWidth="215.0">
+                    <children>
+                        <Label text="Họ" />
+                        <Label text="*" textFill="RED" />
+                    </children>
+                </HBox>
+                <TextField fx:id="txtHo" />
+                <Label text="Tên lót" />
+                <TextField fx:id="txtTenLot" />
+                <HBox prefHeight="25.0" prefWidth="215.0">
+                    <children>
+                        <Label text="Tên" />
+                        <Label text="*" textFill="RED" />
+                    </children>
+                </HBox>
+                <TextField fx:id="txtTen" />
+                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="215.0" spacing="10.0">
+                    <children>
+                        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClickSave" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #0095FF;" text="Tạo" textFill="WHITE" />
+                        <Button fx:id="bynHuy" mnemonicParsing="false" onAction="#onClickHuy" prefHeight="25.0" prefWidth="60.0" text="Huỷ" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="BOTTOM_LEFT" prefHeight="223.0" prefWidth="215.0">
+                    <children>
+                        <ImageView fx:id="imgHome" fitHeight="30.0" fitWidth="27.0" onMouseClicked="#onClickBackHome" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../image/home-circle.png" />
+                            </image>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" />
+            </children>
+            <HBox.margin>
+                <Insets right="5.0" />
+            </HBox.margin>
+        </VBox>
+        <VBox prefHeight="416.0" prefWidth="772.0" spacing="5.0" style="-fx-background-color: #FAFAFB;">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="368.0" spacing="5.0">
+                    <children>
+                        <Label text="Tìm kiếm" />
+                        <TextField fx:id="txtTimKiem" onKeyPressed="#onKeyPressSearch" prefHeight="25.0" prefWidth="462.0" />
+                    </children>
+                </HBox>
+                <TableView fx:id="tbvDocGia" onMouseClicked="#onSelectDocGia" prefHeight="381.0" prefWidth="734.0">
+                    <columns>
+                        <TableColumn fx:id="colMaDG" prefWidth="271.0" text="Mã độc giả" />
+                        <TableColumn fx:id="colHo" prefWidth="97.0" text="Họ" />
+                        <TableColumn fx:id="colTenLot" prefWidth="147.0" text="Tên lót" />
+                        <TableColumn fx:id="colTen" prefWidth="95.0" text="Tên" />
+                        <TableColumn fx:id="colNgayTao" prefWidth="102.0" text="Ngày tạo" />
+                        <TableColumn fx:id="colXoa" prefWidth="53.0" text="Xoá" />
+                    </columns>
+                </TableView>
+            </children>
+            <padding>
+                <Insets left="5.0" />
+            </padding>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</HBox>
