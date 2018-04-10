@@ -82,7 +82,7 @@
                 <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="368.0" spacing="5.0">
                     <children>
                         <Label text="Tìm kiếm" />
-                        <TextField fx:id="txtTimKiem" onKeyPressed="#onKeyPressSearch" prefHeight="25.0" prefWidth="462.0" />
+                        <TextField fx:id="txtTimKiem" onKeyPressed="#onKeyPressSearch" prefHeight="31.0" prefWidth="439.0" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="243.0">
                      <children>
                         <CheckBox fx:id="chkShowDGDeleted" mnemonicParsing="false" onMouseClicked="#onClickCheckboxHienDG" text="Hiện độc giả đã xoá" />

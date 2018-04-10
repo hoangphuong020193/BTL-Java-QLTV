@@ -20,7 +20,7 @@ public class ConnectionContext {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/quanlythuvien", "root", "159357Abcd");
+                    "jdbc:mysql://localhost/quanlythuvien", "root", "123456");
 
         } catch (ClassNotFoundException e) {
             System.out.println("Load không được driver");

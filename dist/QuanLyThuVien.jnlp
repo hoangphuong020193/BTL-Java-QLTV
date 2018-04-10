@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="QuanLyThuVien.jar" size="171855" download="eager" />
+=======
+    <jar href="QuanLyThuVien.jar" size="153356" download="eager" />
+>>>>>>> 75173ae12cc8e61a3c0e6ea87c57bb64bbe8c73c
     <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="QuanLyThuVien" >
