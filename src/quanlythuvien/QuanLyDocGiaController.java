@@ -38,7 +38,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import model.NhanVienDangNhap;
+import model.NhanVienDangNhapModel;
 
 /**
  * FXML Controller class
@@ -75,7 +75,7 @@ public class QuanLyDocGiaController implements Initializable {
     private CheckBox chkShowDGDeleted;
 
     private Connection connect;
-    private NhanVienDangNhap nhanVien;
+    private NhanVienDangNhapModel nhanVien;
     private DocGia docGiaSelected;
     private String maDG = "";
     private String ho = "";
@@ -92,7 +92,7 @@ public class QuanLyDocGiaController implements Initializable {
         initTableView();
     }
 
-    public void setNhanVien(NhanVienDangNhap nv) {
+    public void setNhanVien(NhanVienDangNhapModel nv) {
         nhanVien = nv;
     }
 

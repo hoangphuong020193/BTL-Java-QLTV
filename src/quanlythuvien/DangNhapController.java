@@ -8,6 +8,7 @@ package quanlythuvien;
 import common.OpenForm;
 import data.ConnectionContext;
 import helper.MD5Encrypt;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,10 +20,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.NhanVienDangNhap;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import model.NhanVienDangNhapModel;
 
 /**
  * FXML Controller class
@@ -39,6 +43,7 @@ public class DangNhapController implements Initializable {
     private PasswordField txtPassword;
 
     private Connection connect;
+    private NhanVienDangNhapModel nv;
 
     /**
      * Initializes the controller class.
@@ -49,7 +54,46 @@ public class DangNhapController implements Initializable {
     }
 
     @FXML
-    public void loginSubmit(ActionEvent event) throws SQLException {
+    public void loginSubmit(ActionEvent event) throws IOException {
+        if (dangNhap()) {
+            OpenForm form = new OpenForm();
+            FXMLLoader loader = form.open("TrangChu.fxml", "Trang chủ");
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            TrangChuController controller = loader.getController();
+            controller.setNhanVien(nv);
+        }
+    }
+
+    @FXML
+    public void resetForm(ActionEvent event) {
+        txtUserName.setText("");
+        txtPassword.setText("");
+        lbError.setText("");
+    }
+
+    @FXML
+    private void onKeyPress(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (dangNhap()) {
+                OpenForm form = new OpenForm();
+                FXMLLoader loader = form.open("TrangChu.fxml", "Trang chủ");
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+                TrangChuController controller = loader.getController();
+                controller.setNhanVien(nv);
+            }
+        }
+    }
+
+    private boolean validateData() {
+        if (txtUserName.getText().trim().equals("")
+                || txtPassword.getText().trim().equals("")) {
+            lbError.setText("Vui lòng điền đầy đủ Tên đăng nhập/ Mật khẩu");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean dangNhap() {
         try {
             if (validateData()) {
                 String userName = txtUserName.getText().trim().toLowerCase();
@@ -63,41 +107,21 @@ public class DangNhapController implements Initializable {
                 prep.setString(2, passWord);
                 ResultSet result = prep.executeQuery();
                 if (result.next()) {
-                    NhanVienDangNhap nv = new NhanVienDangNhap();
+                    nv = new NhanVienDangNhapModel();
                     nv.setTenDangNhap(userName);
                     nv.setHo(result.getString("Ho"));
                     nv.setTenLot(result.getString("TenLot"));
                     nv.setTen(result.getString("Ten"));
-
-                    OpenForm form = new OpenForm();
-                    FXMLLoader loader = form.open("TrangChu.fxml", "Trang chủ");
-                    ((Node) (event.getSource())).getScene().getWindow().hide();
-                    TrangChuController controller = loader.getController();
-                    controller.setNhanVien(nv);
-
                     connect.close();
+                    return true;
                 } else {
                     lbError.setText("Sai Tên đăng nhập/ Mật khẩu");
                 }
             }
+            return false;
         } catch (Exception e) {
             System.out.println("Error: " + e);
-        }
-    }
-
-    @FXML
-    public void resetForm(ActionEvent event) {
-        txtUserName.setText("");
-        txtPassword.setText("");
-        lbError.setText("");
-    }
-
-    private boolean validateData() {
-        if (txtUserName.getText().trim().equals("")
-                || txtPassword.getText().trim().equals("")) {
-            lbError.setText("Vui lòng điền đầy đủ Tên đăng nhập/ Mật khẩu");
             return false;
         }
-        return true;
     }
 }

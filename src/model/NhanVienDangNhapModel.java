@@ -9,7 +9,7 @@ package model;
  *
  * @author phuonghoangnguyen
  */
-public class NhanVienDangNhap {
+public class NhanVienDangNhapModel {
 
     private String TenDangNhap;
     private String Ho;

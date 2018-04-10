@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.QuanLySachController">
+  <tabs>
+    <Tab text="Quản lý sách">
+         <content>
+            <HBox prefHeight="587.0" prefWidth="1046.0">
+               <children>
+                  <VBox prefHeight="609.0" prefWidth="346.0" spacing="5.0" style="-fx-background-color: #FAFAFB;">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="69.0" prefWidth="306.0">
+                           <children>
+                              <ImageView fitHeight="83.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/library.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <Label text="Mã sách" />
+                        <TextField fx:id="txtMaSach" prefHeight="25.0" prefWidth="258.0" />
+                        <Label text="Tên sách" />
+                        <TextField fx:id="txtTenSach" />
+                        <Label text="Loại sách" />
+                        <ComboBox fx:id="cbbLoaiSach" prefHeight="25.0" prefWidth="348.0" />
+                        <Label text="Tác giả" />
+                        <ComboBox fx:id="cbbTacGia" prefHeight="25.0" prefWidth="348.0" />
+                        <Label text="Nhà xuất bản" />
+                        <ComboBox fx:id="cbbNXB" prefHeight="25.0" prefWidth="348.0" />
+                        <Label text="Số lượng" />
+                        <TextField fx:id="txtSoLuong" />
+                        <Label text="Ngày nhập" />
+                        <DatePicker fx:id="dpkNgayNhap" prefHeight="25.0" prefWidth="354.0" />
+                        <HBox alignment="CENTER" prefHeight="61.0" prefWidth="320.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClickSave" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnHuy" mnemonicParsing="false" onAction="#onClickHuy" text="Huỷ">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_LEFT" prefHeight="47.0" prefWidth="320.0">
+                           <children>
+                              <ImageView fx:id="imgHome" fitHeight="30.0" fitWidth="27.0" onMouseClicked="#onClickBackHome" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@../image/home-circle.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="544.0" prefWidth="1102.0" spacing="5.0" style="-fx-background-color: #FAFAFB;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="592.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="62.0" text="Tìm kiếm" />
+                              <TextField fx:id="txtTimKiem" onKeyPressed="#onKeyPressSearch" prefHeight="25.0" prefWidth="382.0" />
+                              <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="563.0">
+                                 <children>
+                                    <CheckBox fx:id="chkShowBookDelete" mnemonicParsing="false" onMouseClicked="#onClickCheckboxHienSach" prefHeight="17.0" prefWidth="111.0" text="Hiện sách đã xoá" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tbvSach" onMouseClicked="#onSelectSach" prefHeight="510.0" prefWidth="1007.0">
+                          <columns>
+                            <TableColumn fx:id="colMaSach" prefWidth="128.0" text="Mã sách" />
+                            <TableColumn fx:id="colTenSach" prefWidth="179.0" text="Tên sách" />
+                              <TableColumn fx:id="colLoaiSach" prefWidth="123.0" text="Loại sách" />
+                              <TableColumn fx:id="colKieuSach" prefWidth="129.0" text="Kiểu sách" />
+                              <TableColumn fx:id="colTacGia" prefWidth="145.0" text="Tác giả" />
+                              <TableColumn fx:id="colNXB" prefWidth="101.0" text="NXB" />
+                              <TableColumn fx:id="colNgayNhap" prefWidth="82.0" text="Ngày nhập" />
+                              <TableColumn fx:id="colSoLuong" prefWidth="71.0" text="Số lượng" />
+                          </columns>
+                        </TableView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </content></Tab>
+    <Tab text="Quản lý loại sách" />
+      <Tab text="Quản lý tác giả" />
+      <Tab text="Quản lý NXB" />
+  </tabs>
+</TabPane>

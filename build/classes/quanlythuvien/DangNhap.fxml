@@ -42,12 +42,12 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUserName" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="txtUserName" onKeyPressed="#onKeyPress" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets right="25.0" />
          </GridPane.margin>
       </TextField>
-      <PasswordField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <PasswordField fx:id="txtPassword" onKeyPressed="#onKeyPress" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets right="25.0" />
          </GridPane.margin>

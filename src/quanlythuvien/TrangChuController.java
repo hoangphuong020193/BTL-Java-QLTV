@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import model.NhanVienDangNhap;
+import model.NhanVienDangNhapModel;
 
 /**
  * FXML Controller class
@@ -23,7 +23,7 @@ import model.NhanVienDangNhap;
  */
 public class TrangChuController implements Initializable {
 
-    private NhanVienDangNhap nhanVien;
+    private NhanVienDangNhapModel nhanVien;
     @FXML
     private Label lbNVDangNhap;
 
@@ -35,7 +35,7 @@ public class TrangChuController implements Initializable {
         // TODO
     }
 
-    public void setNhanVien(NhanVienDangNhap nv) {
+    public void setNhanVien(NhanVienDangNhapModel nv) {
         nhanVien = nv;
         lbNVDangNhap.setText("Chào " + nv.getTen());
     }
@@ -49,6 +49,9 @@ public class TrangChuController implements Initializable {
 
     @FXML
     private void onClickQLS(MouseEvent event) {
+        FXMLLoader loader = navigatePage(event, "QuanLySach.fxml", "Quản lý sách");
+        QuanLySachController controller = loader.getController();
+        controller.setNhanVien(nhanVien);
     }
 
     @FXML
