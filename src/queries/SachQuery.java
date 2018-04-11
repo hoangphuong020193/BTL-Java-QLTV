@@ -67,7 +67,7 @@ public class SachQuery {
                 sach.setIdTacGia(result.getInt("IdTacGia"));
                 sach.setTenTacGia(result.getString("TenTacGia"));
                 sach.setIdLoaiSach(result.getInt("IdLoaiSach"));
-                sach.setTenLoaiSach(result.getString("TenLoai"));
+                sach.setTenLoaiSach(result.getString("TenLoaiSach"));
                 sach.setKieuSach(result.getString("KieuSach"));
                 sach.setIdNXB(result.getInt("IdNXB"));
                 sach.setTenNXB(result.getString("TenNXB"));
@@ -81,5 +81,23 @@ public class SachQuery {
             System.out.println("Error: " + e);
         }
         return listSach;
+    }
+
+    public static boolean CheckMaSach(String maSach, int id) {
+        try {
+            Connection connect = ConnectionContext.ketNoi();
+            String query = "SELECT * FROM sach WHERE Id <> ? && MaSach = ?";
+            PreparedStatement prep = connect.prepareStatement(query);
+            prep.setInt(1, id);
+            prep.setString(2, maSach);
+            ResultSet result = prep.executeQuery();
+            while (result.next()) {
+                return true;
+            }
+            connect.close();
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

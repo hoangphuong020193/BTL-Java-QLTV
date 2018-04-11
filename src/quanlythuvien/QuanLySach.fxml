@@ -145,7 +145,32 @@
                </padding>
             </HBox>
          </content></Tab>
-    <Tab text="Quản lý loại sách" />
+    <Tab text="Quản lý loại sách">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="1300.0" spacing="10.0">
+                     <children>
+                        <Label text="Loại sách" />
+                        <TextField fx:id="txtLoaiSach" prefHeight="25.0" prefWidth="342.0" />
+                        <Label text="Kiểu sách" />
+                        <TextField fx:id="txtKieuSach" prefHeight="25.0" prefWidth="342.0" />
+                        <Button fx:id="btnSaveLoaiSach" mnemonicParsing="false" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE" />
+                        <Button fx:id="btnHuyLoaiSach" mnemonicParsing="false" text="Huỷ" />
+                     </children>
+                  </HBox>
+                  <TableView prefHeight="503.0" prefWidth="1300.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </content></Tab>
       <Tab text="Quản lý tác giả" />
       <Tab text="Quản lý NXB" />
   </tabs>

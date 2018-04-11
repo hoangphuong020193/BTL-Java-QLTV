@@ -8,8 +8,11 @@ package quanlythuvien;
 import commands.SachCommand;
 import common.Dialog;
 import common.OpenForm;
+import entity.Sach;
 import java.net.URL;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
@@ -97,7 +100,7 @@ public class QuanLySachController implements Initializable {
     private TableColumn<SachViewModel, Integer> colSoLuong;
 
     private NhanVienDangNhapModel nhanVien;
-    private SachViewModel sachSelected;
+    private SachViewModel sachSelected = new SachViewModel();
     private String searchString = "";
 
     /**
@@ -140,6 +143,31 @@ public class QuanLySachController implements Initializable {
     private void onSelectSach(MouseEvent event) {
         sachSelected = tbvSach.getSelectionModel().getSelectedItem();
         btnSave.setText("Lưu");
+        txtMaSach.setText(sachSelected.getMaSach());
+        txtTenSach.setText(sachSelected.getTenSach());
+        txtSoLuong.setText(Integer.toString(sachSelected.getSoLuong()));
+
+        for (LoaiSachViewModel loaiSach : cbbLoaiSach.getItems()) {
+            if (loaiSach.getId() == sachSelected.getIdLoaiSach()) {
+                cbbLoaiSach.setValue(loaiSach);
+                break;
+            }
+        }
+
+        for (TacGiaViewModel tacGia : cbbTacGia.getItems()) {
+            if (tacGia.getId() == sachSelected.getIdTacGia()) {
+                cbbTacGia.setValue(tacGia);
+                break;
+            }
+        }
+
+        for (NhaXuatBanViewModel nxb : cbbNXB.getItems()) {
+            if (nxb.getId() == sachSelected.getIdNXB()) {
+                cbbNXB.setValue(nxb);
+                break;
+            }
+        }
+        dpkNgayNhap.setValue(sachSelected.getNgayNhap().toLocalDate());
     }
 
     @FXML
@@ -149,18 +177,35 @@ public class QuanLySachController implements Initializable {
 
     @FXML
     private void onClickSave(ActionEvent event) {
+        Sach sach = new Sach();
+        sach.setId(sachSelected.getId());
+        sach.setMaSach(txtMaSach.getText().trim());
+        sach.setTenSach(txtTenSach.getText().trim());
+        sach.setIdLoaiSach(cbbLoaiSach.getValue() != null ? cbbLoaiSach.getValue().getId() : 0);
+        sach.setIdTacGia(cbbTacGia.getValue() != null ? cbbTacGia.getValue().getId() : 0);
+        sach.setIdNXB(cbbNXB.getValue() != null ? cbbNXB.getValue().getId() : 0);
+        sach.setSoLuong(!txtSoLuong.getText().equals("") ? Integer.parseInt(txtSoLuong.getText()) : 0);
+        sach.setNgayNhap(dpkNgayNhap.getValue() != null ? Date.valueOf(dpkNgayNhap.getValue()) : null);
+        if (validateData(sach)) {
+            if (sach.getId() == 0) {
+                if (SachCommand.ThemSach(sach)) {
+                    getListSach();
+                    Dialog.infoBox("Thêm sách thành công", "Thành công", null);
+                    resetControl();
+                }
+            } else {
+                if (SachCommand.SuaSach(sach)) {
+                    getListSach();
+                    Dialog.infoBox("Sửa sách thành công", "Thành công", null);
+                    resetControl();
+                }
+            }
+        }
     }
 
     @FXML
     private void onClickHuy(ActionEvent event) {
-        txtMaSach.setText("");
-        txtTenSach.setText("");
-        txtSoLuong.setText("");
-        cbbLoaiSach.valueProperty().set(null);
-        cbbTacGia.valueProperty().set(null);
-        cbbNXB.valueProperty().set(null);
-        dpkNgayNhap.setValue(null);
-        btnSave.setText("Tạo");
+        resetControl();
     }
 
     private void initCBBLoaiSach() {
@@ -281,5 +326,36 @@ public class QuanLySachController implements Initializable {
         ObservableList<SachViewModel> listSach
                 = SachQuery.getSach(searchString, chkShowBookDelete.isSelected());
         tbvSach.setItems(listSach);
+    }
+
+    private boolean validateData(Sach sach) {
+        if (sach.getMaSach().equals("")
+                || sach.getTenSach().equals("")
+                || sach.getIdLoaiSach() == 0
+                || sach.getIdTacGia() == 0
+                || sach.getIdNXB() == 0
+                || sach.getSoLuong() <= 0
+                || sach.getNgayNhap() == null) {
+            Dialog.errorBox("Tất cả các trường phải được nhập", "Lỗi", null);
+            return false;
+        }
+
+        if (SachQuery.CheckMaSach(sach.getMaSach().trim(), sach.getId())) {
+            Dialog.errorBox("Mã sách đã tồn tại", "Lỗi", null);
+            return false;
+        }
+        return true;
+    }
+
+    private void resetControl() {
+        txtMaSach.setText("");
+        txtTenSach.setText("");
+        txtSoLuong.setText("");
+        cbbLoaiSach.valueProperty().set(null);
+        cbbTacGia.valueProperty().set(null);
+        cbbNXB.valueProperty().set(null);
+        dpkNgayNhap.setValue(null);
+        sachSelected = new SachViewModel();
+        btnSave.setText("Tạo");
     }
 }
