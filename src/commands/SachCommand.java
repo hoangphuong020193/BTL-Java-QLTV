@@ -5,10 +5,12 @@
  */
 package commands;
 
+import common.Dialog;
 import data.ConnectionContext;
 import entity.Sach;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import queries.SachQuery;
 
 /**
  *
@@ -16,7 +18,7 @@ import java.sql.PreparedStatement;
  */
 public class SachCommand {
 
-    public static boolean XoaSach(int id) {
+    public static boolean xoaSach(int id) {
         try {
             Connection connect = ConnectionContext.ketNoi();
             String query = "UPDATE sach SET Xoa = 1 WHERE Id = ?";
@@ -31,7 +33,19 @@ public class SachCommand {
         return false;
     }
 
-    public static boolean ThemSach(Sach sach) {
+    public static boolean saveSach(Sach sach) {
+        if (!validateData(sach)) {
+            return false;
+        }
+
+        if (sach.getId() == 0) {
+            return themSach(sach);
+        } else {
+            return suaSach(sach);
+        }
+    }
+
+    private static boolean themSach(Sach sach) {
         try {
             Connection connect = ConnectionContext.ketNoi();
             String query = "INSERT INTO sach "
@@ -47,13 +61,15 @@ public class SachCommand {
             prep.setInt(7, sach.getSoLuong());
             prep.executeUpdate();
             connect.close();
+            Dialog.infoBox("Sửa sách thành công", "Thành công", null);
             return true;
         } catch (Exception e) {
+            System.out.println("Error: " + e);
             return false;
         }
     }
 
-    public static boolean SuaSach(Sach sach) {
+    private static boolean suaSach(Sach sach) {
         try {
             Connection connect = ConnectionContext.ketNoi();
             String query = "UPDATE sach SET "
@@ -76,9 +92,30 @@ public class SachCommand {
             prep.setInt(8, sach.getId());
             prep.executeUpdate();
             connect.close();
+            Dialog.infoBox("Thêm sách thành công", "Thành công", null);
             return true;
         } catch (Exception e) {
+            System.out.println("Error: " + e);
             return false;
         }
+    }
+
+    private static boolean validateData(Sach sach) {
+        if (sach.getMaSach().equals("")
+                || sach.getTenSach().equals("")
+                || sach.getIdLoaiSach() == 0
+                || sach.getIdTacGia() == 0
+                || sach.getIdNXB() == 0
+                || sach.getSoLuong() <= 0
+                || sach.getNgayNhap() == null) {
+            Dialog.errorBox("Tất cả các trường phải được nhập", "Lỗi", null);
+            return false;
+        }
+
+        if (SachQuery.CheckMaSach(sach.getMaSach().trim(), sach.getId())) {
+            Dialog.errorBox("Mã sách đã tồn tại", "Lỗi", null);
+            return false;
+        }
+        return true;
     }
 }

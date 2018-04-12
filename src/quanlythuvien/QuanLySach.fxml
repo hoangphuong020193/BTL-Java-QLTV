@@ -11,7 +11,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.QuanLySachController">
   <tabs>
-    <Tab text="Quản lý sách">
+    <Tab onSelectionChanged="#onChangeTabQLS" text="Quản lý sách">
          <content>
             <HBox prefHeight="587.0" prefWidth="1046.0">
                <children>
@@ -77,12 +77,12 @@
                         <DatePicker fx:id="dpkNgayNhap" prefHeight="25.0" prefWidth="354.0" />
                         <HBox alignment="CENTER" prefHeight="61.0" prefWidth="320.0" spacing="10.0">
                            <children>
-                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClickSave" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE">
+                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClickSaveSach" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnHuy" mnemonicParsing="false" onAction="#onClickHuy" text="Huỷ">
+                              <Button fx:id="btnHuy" mnemonicParsing="false" onAction="#onClickHuySach" text="Huỷ">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -145,24 +145,34 @@
                </padding>
             </HBox>
          </content></Tab>
-    <Tab text="Quản lý loại sách">
+    <Tab onSelectionChanged="#onChangeTabQLLS" text="Quản lý loại sách">
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="1300.0" spacing="10.0">
                      <children>
-                        <Label text="Loại sách" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="55.0">
+                           <children>
+                              <Label text="Loại sách" />
+                              <Label text="*" textFill="RED" />
+                           </children>
+                        </HBox>
                         <TextField fx:id="txtLoaiSach" prefHeight="25.0" prefWidth="342.0" />
-                        <Label text="Kiểu sách" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="59.0">
+                           <children>
+                              <Label text="Kiểu sách" />
+                              <Label text="*" textFill="RED" />
+                           </children>
+                        </HBox>
                         <TextField fx:id="txtKieuSach" prefHeight="25.0" prefWidth="342.0" />
-                        <Button fx:id="btnSaveLoaiSach" mnemonicParsing="false" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE" />
-                        <Button fx:id="btnHuyLoaiSach" mnemonicParsing="false" text="Huỷ" />
+                        <Button fx:id="btnSaveLoaiSach" mnemonicParsing="false" onAction="#onClickSaveLoaiSach" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE" />
+                        <Button fx:id="btnHuyLoaiSach" mnemonicParsing="false" onAction="#onClickHuyLoaiSach" text="Huỷ" />
                      </children>
                   </HBox>
-                  <TableView prefHeight="503.0" prefWidth="1300.0">
+                  <TableView fx:id="tbvLoaiSach" onMouseClicked="#onSelectLoaiSach" prefHeight="503.0" prefWidth="1300.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="colLoaiSachLS" prefWidth="581.0" text="Loại sách" />
+                      <TableColumn fx:id="colKieuSachLS" minWidth="0.0" prefWidth="663.0" text="Kiểu sách" />
                     </columns>
                   </TableView>
                </children>
@@ -171,7 +181,67 @@
                </padding>
             </VBox>
          </content></Tab>
-      <Tab text="Quản lý tác giả" />
-      <Tab text="Quản lý NXB" />
+      <Tab onSelectionChanged="#onChangeTabQLTG" text="Quản lý tác giả">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="82.0" prefWidth="1300.0" spacing="5.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="63.0">
+                           <children>
+                              <Label text="Tên tác giả" />
+                              <Label text="*" textFill="#f20000" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtTenTacGiaTG" prefHeight="25.0" prefWidth="318.0" />
+                        <Button fx:id="btnSaveTG" mnemonicParsing="false" onAction="#onClickSaveTG" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE" />
+                        <Button fx:id="btnHuyTG" mnemonicParsing="false" onAction="#onClickHuyTG" text="Huỷ" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tbvTacGia" onMouseClicked="#onSelectTacGia" prefHeight="540.0" prefWidth="1290.0">
+                    <columns>
+                      <TableColumn fx:id="colTenTacGiaTG" prefWidth="1234.0" text="Tên tác giả" />
+                    </columns>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </content></Tab>
+      <Tab onSelectionChanged="#onChangeTabQLNXB" text="Quản lý NXB">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="1300.0" spacing="10.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="55.0">
+                           <children>
+                              <Label text="Tên NXB" />
+                              <Label text="*" textFill="RED" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtTenNXB" prefHeight="25.0" prefWidth="342.0" />
+                        <Label text="Địa chỉ" />
+                        <TextField fx:id="txtDiaChiNXB" prefHeight="25.0" prefWidth="342.0" />
+                        <Label text="SĐT" />
+                        <TextField fx:id="txtSdtNXB" prefHeight="25.0" prefWidth="159.0" />
+                        <Button fx:id="btnSaveNXB" mnemonicParsing="false" onAction="#onClickSaveNXB" style="-fx-background-color: #0095FF;" text="Thêm" textFill="WHITE" />
+                        <Button fx:id="btnHuyNXB" mnemonicParsing="false" onAction="#onClickHuyNXB" text="Huỷ" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tbvNXB" onMouseClicked="#onSelectNXB" prefHeight="503.0" prefWidth="1300.0">
+                     <columns>
+                        <TableColumn fx:id="colTenNXBNXB" prefWidth="442.0" text="Tên NXB" />
+                        <TableColumn fx:id="colDiaChiNXB" minWidth="0.0" prefWidth="636.0" text="Địa chỉ" />
+                        <TableColumn fx:id="colSdtNXB" minWidth="0.0" prefWidth="156.0" text="SDT" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </content></Tab>
   </tabs>
 </TabPane>

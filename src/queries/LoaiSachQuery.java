@@ -6,6 +6,7 @@
 package queries;
 
 import data.ConnectionContext;
+import entity.LoaiSach;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +33,28 @@ public class LoaiSachQuery {
                 LoaiSachViewModel loaiSach = new LoaiSachViewModel();
                 loaiSach.setId(result.getInt("Id"));
                 loaiSach.setTenLoaiSach(result.getString("TenLoai"));
+                listLoai.add(loaiSach);
+            }
+            connect.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return listLoai;
+    }
+
+    public static ObservableList<LoaiSach> getListLoaiSach() {
+        ObservableList<LoaiSach> listLoai = FXCollections.observableArrayList();
+        try {
+            Connection connect = ConnectionContext.ketNoi();
+            String query = "SELECT * FROM loai_sach";
+            PreparedStatement prep = connect.prepareStatement(query);
+            ResultSet result = prep.executeQuery();
+            while (result.next()) {
+                LoaiSach loaiSach = new LoaiSach();
+                loaiSach.setId(result.getInt("Id"));
+                loaiSach.setTenLoaiSach(result.getString("TenLoaiSach"));
+                loaiSach.setKieuSach(result.getString("KieuSach"));
+                loaiSach.setXoa(result.getBoolean("Xoa"));
                 listLoai.add(loaiSach);
             }
             connect.close();

@@ -5,18 +5,25 @@
  */
 package quanlythuvien;
 
+import commands.LoaiSachCommand;
+import commands.NhaXuatBanCommand;
 import commands.SachCommand;
+import commands.TacGiaCommand;
 import common.Dialog;
 import common.OpenForm;
+import entity.LoaiSach;
+import entity.NhaXuatBan;
 import entity.Sach;
+import entity.TacGia;
 import java.net.URL;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ResourceBundle;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +40,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -98,10 +106,55 @@ public class QuanLySachController implements Initializable {
     private TableColumn<SachViewModel, Date> colNgayNhap;
     @FXML
     private TableColumn<SachViewModel, Integer> colSoLuong;
+    @FXML
+    private TextField txtLoaiSach;
+    @FXML
+    private TextField txtKieuSach;
+    @FXML
+    private Button btnSaveLoaiSach;
+    @FXML
+    private Button btnHuyLoaiSach;
+    @FXML
+    private TableView<LoaiSach> tbvLoaiSach;
+    @FXML
+    private TableColumn<LoaiSach, String> colLoaiSachLS;
+    @FXML
+    private TableColumn<LoaiSach, String> colKieuSachLS;
+    @FXML
+    private Button btnSaveTG;
+    @FXML
+    private Button btnHuyTG;
+    @FXML
+    private TableView<TacGia> tbvTacGia;
+    @FXML
+    private TableColumn<TacGia, String> colTenTacGiaTG;
+    @FXML
+    private TextField txtTenTacGiaTG;
+    @FXML
+    private TextField txtTenNXB;
+    @FXML
+    private TextField txtDiaChiNXB;
+    @FXML
+    private TextField txtSdtNXB;
+    @FXML
+    private Button btnSaveNXB;
+    @FXML
+    private Button btnHuyNXB;
+    @FXML
+    private TableView<NhaXuatBan> tbvNXB;
+    @FXML
+    private TableColumn<NhaXuatBan, String> colTenNXBNXB;
+    @FXML
+    private TableColumn<NhaXuatBan, String> colDiaChiNXB;
+    @FXML
+    private TableColumn<NhaXuatBan, String> colSdtNXB;
 
     private NhanVienDangNhapModel nhanVien;
     private SachViewModel sachSelected = new SachViewModel();
     private String searchString = "";
+    private LoaiSach loaiSachSelected = new LoaiSach();
+    private TacGia tacGiaSelected = new TacGia();
+    private NhaXuatBan nxbSelected = new NhaXuatBan();
 
     /**
      * Initializes the controller class.
@@ -112,10 +165,36 @@ public class QuanLySachController implements Initializable {
         initCBBTacGia();
         initCBBNhaXuatBan();
         initTableViewSach();
+        initTableViewLoaiSach();
+        initTableViewTacGia();
+        initTableViewNXB();
     }
 
     public void setNhanVien(NhanVienDangNhapModel nv) {
         nhanVien = nv;
+    }
+
+    @FXML
+    private void onChangeTabQLS(Event event) {
+        getListSach();
+        initCBBLoaiSach();
+        initCBBTacGia();
+        initCBBNhaXuatBan();
+    }
+
+    @FXML
+    private void onChangeTabQLLS(Event event) {
+        getListLoaiSach();
+    }
+
+    @FXML
+    private void onChangeTabQLTG(Event event) {
+        getListTacGia();
+    }
+
+    @FXML
+    private void onChangeTabQLNXB(Event event) {
+        getListNXB();
     }
 
     @FXML
@@ -176,7 +255,7 @@ public class QuanLySachController implements Initializable {
     }
 
     @FXML
-    private void onClickSave(ActionEvent event) {
+    private void onClickSaveSach(ActionEvent event) {
         Sach sach = new Sach();
         sach.setId(sachSelected.getId());
         sach.setMaSach(txtMaSach.getText().trim());
@@ -186,26 +265,121 @@ public class QuanLySachController implements Initializable {
         sach.setIdNXB(cbbNXB.getValue() != null ? cbbNXB.getValue().getId() : 0);
         sach.setSoLuong(!txtSoLuong.getText().equals("") ? Integer.parseInt(txtSoLuong.getText()) : 0);
         sach.setNgayNhap(dpkNgayNhap.getValue() != null ? Date.valueOf(dpkNgayNhap.getValue()) : null);
-        if (validateData(sach)) {
-            if (sach.getId() == 0) {
-                if (SachCommand.ThemSach(sach)) {
-                    getListSach();
-                    Dialog.infoBox("Thêm sách thành công", "Thành công", null);
-                    resetControl();
-                }
-            } else {
-                if (SachCommand.SuaSach(sach)) {
-                    getListSach();
-                    Dialog.infoBox("Sửa sách thành công", "Thành công", null);
-                    resetControl();
-                }
-            }
+        if (SachCommand.saveSach(sach)) {
+            resetSach();
         }
     }
 
     @FXML
-    private void onClickHuy(ActionEvent event) {
-        resetControl();
+    private void onClickHuySach(ActionEvent event) {
+        resetSach();
+    }
+
+    @FXML
+    private void onClickSaveLoaiSach(ActionEvent event) {
+        loaiSachSelected.setTenLoaiSach(txtLoaiSach.getText().trim());
+        loaiSachSelected.setKieuSach(txtKieuSach.getText().trim());
+        if (LoaiSachCommand.saveLoaiSach(loaiSachSelected)) {
+            getListLoaiSach();
+            resetLoaiSach();
+        }
+    }
+
+    @FXML
+    private void onClickHuyLoaiSach(ActionEvent event) {
+        resetLoaiSach();
+    }
+
+    @FXML
+    private void onSelectLoaiSach(MouseEvent event) {
+        loaiSachSelected = tbvLoaiSach.getSelectionModel().getSelectedItem();
+        btnSaveLoaiSach.setText("Lưu");
+        txtLoaiSach.setText(loaiSachSelected.getTenLoaiSach());
+        txtKieuSach.setText(loaiSachSelected.getKieuSach());
+    }
+
+    @FXML
+    private void onSelectTacGia(MouseEvent event) {
+        tacGiaSelected = tbvTacGia.getSelectionModel().getSelectedItem();
+        btnSaveTG.setText("Lưu");
+        txtTenTacGiaTG.setText(tacGiaSelected.getTenTacGia());
+    }
+
+    @FXML
+    private void onClickSaveTG(ActionEvent event) {
+        tacGiaSelected.setTenTacGia(txtTenTacGiaTG.getText().trim());
+        if (TacGiaCommand.saveTacGia(tacGiaSelected)) {
+            getListTacGia();
+            resetTacGia();
+        }
+    }
+
+    @FXML
+    private void onClickHuyTG(ActionEvent event) {
+        resetTacGia();
+    }
+
+    @FXML
+    private void onClickSaveNXB(ActionEvent event) {
+        nxbSelected.setTenNXB(txtTenNXB.getText().trim());
+        nxbSelected.setDiaChi(txtDiaChiNXB.getText().trim());
+        nxbSelected.setSDT(txtSdtNXB.getText().trim());
+        if (NhaXuatBanCommand.saveNXB(nxbSelected)) {
+            getListNXB();
+            resetNXB();
+        }
+    }
+
+    @FXML
+    private void onClickHuyNXB(ActionEvent event) {
+        resetNXB();
+    }
+
+    @FXML
+    private void onSelectNXB(MouseEvent event) {
+        nxbSelected = tbvNXB.getSelectionModel().getSelectedItem();
+        btnSaveNXB.setText("Lưu");
+        txtTenNXB.setText(nxbSelected.getTenNXB());
+        txtDiaChiNXB.setText(nxbSelected.getDiaChi());
+        txtSdtNXB.setText(nxbSelected.getSDT());
+    }
+
+    private class ButtonCell extends TableCell<SachViewModel, SachViewModel> {
+
+        final Button cellButton = new Button("Xoá");
+
+        ButtonCell() {
+
+            cellButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent t) {
+                    Dialog.confirmBox("Bạn có muốn xoá độc giả này?", "Xóa", null)
+                            .ifPresent(response -> {
+                                if (response == ButtonType.OK) {
+                                    SachViewModel sach = (SachViewModel) ButtonCell.this.getTableView()
+                                            .getItems()
+                                            .get(ButtonCell.this.getIndex());
+                                    if (SachCommand.xoaSach(sach.getId())) {
+                                        Dialog.infoBox("Xoá sách thành công", "Xoá", null);
+                                        getListSach();
+                                    }
+                                }
+                            });
+                }
+            });
+        }
+
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(SachViewModel t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty && !t.isXoa()) {
+                setGraphic(cellButton);
+            } else {
+                setGraphic(null);
+            }
+        }
     }
 
     private void initCBBLoaiSach() {
@@ -284,42 +458,83 @@ public class QuanLySachController implements Initializable {
         getListSach();
     }
 
-    private class ButtonCell extends TableCell<SachViewModel, SachViewModel> {
+    private void initTableViewLoaiSach() {
+        colLoaiSachLS.setCellValueFactory(new PropertyValueFactory<>("TenLoaiSach"));
+        colKieuSachLS.setCellValueFactory(new PropertyValueFactory<>("KieuSach"));
+        TableColumn<LoaiSach, Boolean> colXoaLS = new TableColumn<>("Xoá");
+        colXoaLS.setEditable(true);
 
-        final Button cellButton = new Button("Xoá");
+        colXoaLS.setCellFactory(column -> new CheckBoxTableCell<>());
+        colXoaLS.setCellValueFactory(cellData -> {
+            LoaiSach cellValue = cellData.getValue();
+            BooleanProperty property = new SimpleBooleanProperty();
+            property.setValue(cellValue.getXoa());
 
-        ButtonCell() {
-
-            cellButton.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent t) {
-                    Dialog.confirmBox("Bạn có muốn xoá độc giả này?", "Xóa", null)
-                            .ifPresent(response -> {
-                                if (response == ButtonType.OK) {
-                                    SachViewModel sach = (SachViewModel) ButtonCell.this.getTableView()
-                                            .getItems()
-                                            .get(ButtonCell.this.getIndex());
-                                    if (SachCommand.XoaSach(sach.getId())) {
-                                        Dialog.infoBox("Xoá sách thành công", "Xoá", null);
-                                        getListSach();
-                                    }
-                                }
-                            });
+            // Add listener to handler change
+            property.addListener((observable, oldValue, newValue) -> {
+                if (!LoaiSachCommand.toggleLoaiSach(cellValue.getId(), newValue)) {
+                    Dialog.errorBox("Xoá loại sách lỗi", "Lỗi", null);
                 }
             });
-        }
+            return property;
+        });
 
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(SachViewModel t, boolean empty) {
-            super.updateItem(t, empty);
-            if (!empty && !t.isXoa()) {
-                setGraphic(cellButton);
-            } else {
-                setGraphic(null);
-            }
-        }
+        tbvLoaiSach.getColumns().add(colXoaLS);
+        tbvLoaiSach.setEditable(true);
+        getListLoaiSach();
+    }
+
+    private void initTableViewTacGia() {
+        colTenTacGiaTG.setCellValueFactory(new PropertyValueFactory<>("TenTacGia"));
+        TableColumn<TacGia, Boolean> colXoaTG = new TableColumn<>("Xoá");
+        colXoaTG.setEditable(true);
+
+        colXoaTG.setCellFactory(column -> new CheckBoxTableCell<>());
+        colXoaTG.setCellValueFactory(cellData -> {
+            TacGia cellValue = cellData.getValue();
+            BooleanProperty property = new SimpleBooleanProperty();
+            property.setValue(cellValue.getXoa());
+
+            // Add listener to handler change
+            property.addListener((observable, oldValue, newValue) -> {
+                if (!TacGiaCommand.toggleTacGia(cellValue.getId(), newValue)) {
+                    Dialog.errorBox("Xoá tác giả lỗi", "Lỗi", null);
+                }
+            });
+            return property;
+        });
+
+        tbvTacGia.getColumns().add(colXoaTG);
+        tbvTacGia.setEditable(true);
+        getListTacGia();
+    }
+
+    private void initTableViewNXB() {
+        colTenNXBNXB.setCellValueFactory(new PropertyValueFactory<>("TenNXB"));
+        colDiaChiNXB.setCellValueFactory(new PropertyValueFactory<>("DiaChi"));
+        colSdtNXB.setCellValueFactory(new PropertyValueFactory<>("SDT"));
+
+        TableColumn<NhaXuatBan, Boolean> colXoaNXB = new TableColumn<>("Xoá");
+        colXoaNXB.setEditable(true);
+
+        colXoaNXB.setCellFactory(column -> new CheckBoxTableCell<>());
+        colXoaNXB.setCellValueFactory(cellData -> {
+            NhaXuatBan cellValue = cellData.getValue();
+            BooleanProperty property = new SimpleBooleanProperty();
+            property.setValue(cellValue.getXoa());
+
+            // Add listener to handler change
+            property.addListener((observable, oldValue, newValue) -> {
+                if (!TacGiaCommand.toggleTacGia(cellValue.getId(), newValue)) {
+                    Dialog.errorBox("Xoá NXB lỗi", "Lỗi", null);
+                }
+            });
+            return property;
+        });
+
+        tbvNXB.getColumns().add(colXoaNXB);
+        tbvNXB.setEditable(true);
+        getListNXB();
     }
 
     private void getListSach() {
@@ -328,26 +543,25 @@ public class QuanLySachController implements Initializable {
         tbvSach.setItems(listSach);
     }
 
-    private boolean validateData(Sach sach) {
-        if (sach.getMaSach().equals("")
-                || sach.getTenSach().equals("")
-                || sach.getIdLoaiSach() == 0
-                || sach.getIdTacGia() == 0
-                || sach.getIdNXB() == 0
-                || sach.getSoLuong() <= 0
-                || sach.getNgayNhap() == null) {
-            Dialog.errorBox("Tất cả các trường phải được nhập", "Lỗi", null);
-            return false;
-        }
-
-        if (SachQuery.CheckMaSach(sach.getMaSach().trim(), sach.getId())) {
-            Dialog.errorBox("Mã sách đã tồn tại", "Lỗi", null);
-            return false;
-        }
-        return true;
+    private void getListLoaiSach() {
+        ObservableList<LoaiSach> loaiSach
+                = LoaiSachQuery.getListLoaiSach();
+        tbvLoaiSach.setItems(loaiSach);
     }
 
-    private void resetControl() {
+    private void getListTacGia() {
+        ObservableList<TacGia> tacGia
+                = TacGiaQuery.getListTacGia();
+        tbvTacGia.setItems(tacGia);
+    }
+
+    private void getListNXB() {
+        ObservableList<NhaXuatBan> nxb
+                = NhaXuatBanQuery.getListNXB();
+        tbvNXB.setItems(nxb);
+    }
+
+    private void resetSach() {
         txtMaSach.setText("");
         txtTenSach.setText("");
         txtSoLuong.setText("");
@@ -357,5 +571,26 @@ public class QuanLySachController implements Initializable {
         dpkNgayNhap.setValue(null);
         sachSelected = new SachViewModel();
         btnSave.setText("Tạo");
+    }
+
+    private void resetLoaiSach() {
+        txtLoaiSach.setText("");
+        txtKieuSach.setText("");
+        btnSaveLoaiSach.setText("Thêm");
+        loaiSachSelected = new LoaiSach();
+    }
+
+    private void resetTacGia() {
+        txtTenTacGiaTG.setText("");
+        btnSaveTG.setText("Thêm");
+        tacGiaSelected = new TacGia();
+    }
+
+    private void resetNXB() {
+        txtTenNXB.setText("");
+        txtDiaChiNXB.setText("");
+        txtSdtNXB.setText("");
+        btnSaveNXB.setText("Thêm");
+        nxbSelected = new NhaXuatBan();
     }
 }
