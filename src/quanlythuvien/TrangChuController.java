@@ -63,14 +63,23 @@ public class TrangChuController implements Initializable {
 
     @FXML
     private void onClickMuonSach(MouseEvent event) {
+        FXMLLoader loader = navigatePage(event, "MuonSach.fxml", "Mượn sách");
+        MuonSachController controller = loader.getController();
+        controller.setNhanVien(nhanVien);
     }
 
     @FXML
     private void onClickBaoCao(MouseEvent event) {
+        FXMLLoader loader = navigatePage(event, "ThongKe.fxml", "Thống kê");
+        ThongKeController controller = loader.getController();
+        controller.setNhanVien(nhanVien);
     }
 
     @FXML
     private void onClickTraSach(MouseEvent event) {
+        FXMLLoader loader = navigatePage(event, "TraSach.fxml", "Trả sách");
+        TraSachController controller = loader.getController();
+        controller.setNhanVien(nhanVien);
     }
 
     private FXMLLoader navigatePage(MouseEvent event, String formSource, String tile) {

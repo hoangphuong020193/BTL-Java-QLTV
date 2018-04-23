@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.MuonSachController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="600.0" spacing="5.0">
+         <children>
+            <Label text="Mã độc giả" />
+            <TextField fx:id="txtMaDG" editable="false" prefHeight="25.0" prefWidth="209.0" />
+            <Label text="Tên độc giả" />
+            <TextField fx:id="txtTenDG" editable="false" prefHeight="25.0" prefWidth="230.0" />
+            <Button fx:id="btnTImDocGia" mnemonicParsing="false" onAction="#onTimDocGia" text="Tìm độc giả" />
+            <Button fx:id="btnHuy" mnemonicParsing="false" onAction="#onClickHuy" text="Huỷ" />
+            <Button fx:id="btnTaoPhieuMuon" disable="true" mnemonicParsing="false" onAction="#btnTaoPhieuMuon" text="Tạo phiếu mượn" />
+         </children>
+      </HBox>
+      <HBox prefHeight="386.0" prefWidth="792.0">
+         <children>
+            <TableView fx:id="tbvSachKhaDung" onMouseClicked="#onSelectChonSachKhaDung" prefHeight="378.0" prefWidth="1001.0">
+              <columns>
+                <TableColumn fx:id="colMaSachKhaDung" prefWidth="155.0" text="Mã sách" />
+                <TableColumn fx:id="colTenSachKhaDung" prefWidth="274.0" text="Tên sách" />
+                  <TableColumn fx:id="colLoaiSach" prefWidth="124.0" text="Loại sách" />
+                  <TableColumn fx:id="colKieuSach" prefWidth="98.0" text="Kiểu sách" />
+                  <TableColumn fx:id="colSoLuongKhaDung" prefWidth="100.0" text="Số lượng còn lại" />
+              </columns>
+            </TableView>
+            <VBox alignment="CENTER" prefHeight="383.0" prefWidth="310.0" spacing="10.0">
+               <children>
+                  <Button fx:id="btnThem" disable="true" mnemonicParsing="false" onAction="#onClickThem" text="--&gt;" />
+                  <Button fx:id="btnBot" disable="true" mnemonicParsing="false" onAction="#onClickBot" text="&lt;--" />
+               </children>
+            </VBox>
+            <TableView fx:id="tbvSachMuon" onMouseClicked="#onSelectSachMuon" prefHeight="383.0" prefWidth="584.0">
+              <columns>
+                <TableColumn fx:id="colMaSachMuon" prefWidth="149.0" text="Mã sách" />
+                <TableColumn fx:id="colTenSachMuon" prefWidth="185.0" text="Tên sách" />
+              </columns>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TableView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="1147.0">
+         <children>
+            <ImageView fitHeight="37.0" fitWidth="29.0" onMouseClicked="#onClickBackHome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/home-circle.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets top="8.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

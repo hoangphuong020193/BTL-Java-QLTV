@@ -7,207 +7,205 @@ package model;
 
 import java.sql.Date;
 
-
-
 /**
  *
  * @author phuonghoangnguyen
  */
 public class SachViewModel {
 
-    private int Id;
-    private String MaSach;
-    private String TenSach;
-    private int IdLoaiSach;
-    private String TenLoaiSach;
-    private String KieuSach;
-    private int IdTacGia;
-    private String TenTacGia;
-    private int IdNXB;
-    private String TenNXB;
-    private Date NgayNhap;
-    private int SoLuong;
-    private boolean Xoa;
+    private int id;
+    private String maSach;
+    private String tenSach;
+    private int idLoaiSach;
+    private String tenLoaiSach;
+    private String kieuSach;
+    private int idTacGia;
+    private String tenTacGia;
+    private int idNXB;
+    private String tenNXB;
+    private Date ngayNhap;
+    private int soLuong;
+    private boolean xoa;
 
     /**
      * @return the Id
      */
     public int getId() {
-        return Id;
+        return id;
     }
 
     /**
      * @param Id the Id to set
      */
     public void setId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     /**
      * @return the MaSach
      */
     public String getMaSach() {
-        return MaSach;
+        return maSach;
     }
 
     /**
      * @param MaSach the MaSach to set
      */
     public void setMaSach(String MaSach) {
-        this.MaSach = MaSach;
+        this.maSach = MaSach;
     }
 
     /**
      * @return the TenSach
      */
     public String getTenSach() {
-        return TenSach;
+        return tenSach;
     }
 
     /**
      * @param TenSach the TenSach to set
      */
     public void setTenSach(String TenSach) {
-        this.TenSach = TenSach;
+        this.tenSach = TenSach;
     }
 
     /**
      * @return the IdLoaiSach
      */
     public int getIdLoaiSach() {
-        return IdLoaiSach;
+        return idLoaiSach;
     }
 
     /**
      * @param IdLoaiSach the IdLoaiSach to set
      */
     public void setIdLoaiSach(int IdLoaiSach) {
-        this.IdLoaiSach = IdLoaiSach;
+        this.idLoaiSach = IdLoaiSach;
     }
 
     /**
      * @return the TenLoaiSach
      */
     public String getTenLoaiSach() {
-        return TenLoaiSach;
+        return tenLoaiSach;
     }
 
     /**
      * @param TenLoaiSach the TenLoaiSach to set
      */
     public void setTenLoaiSach(String TenLoaiSach) {
-        this.TenLoaiSach = TenLoaiSach;
+        this.tenLoaiSach = TenLoaiSach;
     }
 
     /**
      * @return the IdTacGia
      */
     public int getIdTacGia() {
-        return IdTacGia;
+        return idTacGia;
     }
 
     /**
      * @param IdTacGia the IdTacGia to set
      */
     public void setIdTacGia(int IdTacGia) {
-        this.IdTacGia = IdTacGia;
+        this.idTacGia = IdTacGia;
     }
 
     /**
      * @return the TenTacGia
      */
     public String getTenTacGia() {
-        return TenTacGia;
+        return tenTacGia;
     }
 
     /**
      * @param TenTacGia the TenTacGia to set
      */
     public void setTenTacGia(String TenTacGia) {
-        this.TenTacGia = TenTacGia;
+        this.tenTacGia = TenTacGia;
     }
 
     /**
      * @return the IdNXB
      */
     public int getIdNXB() {
-        return IdNXB;
+        return idNXB;
     }
 
     /**
      * @param IdNXB the IdNXB to set
      */
     public void setIdNXB(int IdNXB) {
-        this.IdNXB = IdNXB;
+        this.idNXB = IdNXB;
     }
 
     /**
      * @return the TenNXB
      */
     public String getTenNXB() {
-        return TenNXB;
+        return tenNXB;
     }
 
     /**
      * @param TenNXB the TenNXB to set
      */
     public void setTenNXB(String TenNXB) {
-        this.TenNXB = TenNXB;
+        this.tenNXB = TenNXB;
     }
 
     /**
      * @return the NgayNhap
      */
     public Date getNgayNhap() {
-        return NgayNhap;
+        return ngayNhap;
     }
 
     /**
      * @param NgayNhap the NgayNhap to set
      */
     public void setNgayNhap(Date NgayNhap) {
-        this.NgayNhap = NgayNhap;
+        this.ngayNhap = NgayNhap;
     }
 
     /**
      * @return the SoLuong
      */
     public int getSoLuong() {
-        return SoLuong;
+        return soLuong;
     }
 
     /**
      * @param SoLuong the SoLuong to set
      */
     public void setSoLuong(int SoLuong) {
-        this.SoLuong = SoLuong;
+        this.soLuong = SoLuong;
     }
 
     /**
      * @return the Xoa
      */
     public boolean isXoa() {
-        return Xoa;
+        return xoa;
     }
 
     /**
      * @param Xoa the Xoa to set
      */
     public void setXoa(boolean Xoa) {
-        this.Xoa = Xoa;
+        this.xoa = Xoa;
     }
 
     /**
      * @return the KieuSach
      */
     public String getKieuSach() {
-        return KieuSach;
+        return kieuSach;
     }
 
     /**
      * @param KieuSach the KieuSach to set
      */
     public void setKieuSach(String KieuSach) {
-        this.KieuSach = KieuSach;
+        this.kieuSach = KieuSach;
     }
 }

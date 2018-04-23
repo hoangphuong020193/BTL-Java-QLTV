@@ -11,34 +11,34 @@ package model;
  */
 public class LoaiSachViewModel {
 
-    private int Id;
-    private String TenLoaiSach;
+    private int id;
+    private String tenLoaiSach;
 
     /**
      * @return the Id
      */
     public int getId() {
-        return Id;
+        return id;
     }
 
     /**
      * @param Id the Id to set
      */
     public void setId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     /**
      * @return the TenLoai
      */
     public String getTenLoaiSach() {
-        return TenLoaiSach;
+        return tenLoaiSach;
     }
 
     /**
      * @param TenLoai the TenLoai to set
      */
     public void setTenLoaiSach(String TenLoai) {
-        this.TenLoaiSach = TenLoai;
+        this.tenLoaiSach = TenLoai;
     }
 }

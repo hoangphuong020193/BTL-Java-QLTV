@@ -15,12 +15,15 @@ import entity.LoaiSach;
 import entity.NhaXuatBan;
 import entity.Sach;
 import entity.TacGia;
+import java.io.File;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -46,6 +49,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.LoaiSachViewModel;
 import model.NhaXuatBanViewModel;
@@ -155,6 +160,10 @@ public class QuanLySachController implements Initializable {
     private LoaiSach loaiSachSelected = new LoaiSach();
     private TacGia tacGiaSelected = new TacGia();
     private NhaXuatBan nxbSelected = new NhaXuatBan();
+    private File anhSelected;
+    
+    @FXML
+    private Button btnThemAnh;
 
     /**
      * Initializes the controller class.
@@ -168,6 +177,16 @@ public class QuanLySachController implements Initializable {
         initTableViewLoaiSach();
         initTableViewTacGia();
         initTableViewNXB();
+
+        txtSoLuong.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtSoLuong.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }
 
     public void setNhanVien(NhanVienDangNhapModel nv) {
@@ -267,6 +286,7 @@ public class QuanLySachController implements Initializable {
         sach.setNgayNhap(dpkNgayNhap.getValue() != null ? Date.valueOf(dpkNgayNhap.getValue()) : null);
         if (SachCommand.saveSach(sach)) {
             resetSach();
+            getListSach();
         }
     }
 
@@ -344,6 +364,24 @@ public class QuanLySachController implements Initializable {
         txtSdtNXB.setText(nxbSelected.getSDT());
     }
 
+    @FXML
+    private void onClickThemAnh(ActionEvent event) {
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Chọn ảnh");
+            File source = chooser.showOpenDialog(new Stage());
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("All Images", "*.*"),
+                    new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                    new FileChooser.ExtensionFilter("PNG", "*.png")
+            );
+            
+            anhSelected = source;
+        } catch (Exception e) {
+            System.out.println("Lỗi" + e.getMessage());
+        }
+    }
+
     private class ButtonCell extends TableCell<SachViewModel, SachViewModel> {
 
         final Button cellButton = new Button("Xoá");
@@ -357,9 +395,10 @@ public class QuanLySachController implements Initializable {
                     Dialog.confirmBox("Bạn có muốn xoá độc giả này?", "Xóa", null)
                             .ifPresent(response -> {
                                 if (response == ButtonType.OK) {
-                                    SachViewModel sach = (SachViewModel) ButtonCell.this.getTableView()
-                                            .getItems()
-                                            .get(ButtonCell.this.getIndex());
+                                    SachViewModel sach
+                                            = (SachViewModel) ButtonCell.this.getTableView()
+                                                    .getItems()
+                                                    .get(ButtonCell.this.getIndex());
                                     if (SachCommand.xoaSach(sach.getId())) {
                                         Dialog.infoBox("Xoá sách thành công", "Xoá", null);
                                         getListSach();
@@ -386,7 +425,8 @@ public class QuanLySachController implements Initializable {
         ObservableList<LoaiSachViewModel> listLoai = LoaiSachQuery.getLoaiSach();
         cbbLoaiSach.setItems(listLoai);
 
-        Callback<ListView<LoaiSachViewModel>, ListCell<LoaiSachViewModel>> factory = lv -> new ListCell<LoaiSachViewModel>() {
+        Callback<ListView<LoaiSachViewModel>, ListCell<LoaiSachViewModel>> factory
+                = lv -> new ListCell<LoaiSachViewModel>() {
 
             @Override
             protected void updateItem(LoaiSachViewModel item, boolean empty) {
@@ -402,7 +442,8 @@ public class QuanLySachController implements Initializable {
     private void initCBBTacGia() {
         ObservableList<TacGiaViewModel> listTacGia = TacGiaQuery.getTacGia();
         cbbTacGia.setItems(listTacGia);
-        Callback<ListView<TacGiaViewModel>, ListCell<TacGiaViewModel>> factory = lv -> new ListCell<TacGiaViewModel>() {
+        Callback<ListView<TacGiaViewModel>, ListCell<TacGiaViewModel>> factory
+                = lv -> new ListCell<TacGiaViewModel>() {
 
             @Override
             protected void updateItem(TacGiaViewModel item, boolean empty) {
@@ -419,7 +460,8 @@ public class QuanLySachController implements Initializable {
         ObservableList<NhaXuatBanViewModel> listNXB = NhaXuatBanQuery.getNXB();
         cbbNXB.setItems(listNXB);
 
-        Callback<ListView<NhaXuatBanViewModel>, ListCell<NhaXuatBanViewModel>> factory = lv -> new ListCell<NhaXuatBanViewModel>() {
+        Callback<ListView<NhaXuatBanViewModel>, ListCell<NhaXuatBanViewModel>> factory
+                = lv -> new ListCell<NhaXuatBanViewModel>() {
 
             @Override
             protected void updateItem(NhaXuatBanViewModel item, boolean empty) {
@@ -433,14 +475,14 @@ public class QuanLySachController implements Initializable {
     }
 
     private void initTableViewSach() {
-        colMaSach.setCellValueFactory(new PropertyValueFactory<>("MaSach"));
-        colTenSach.setCellValueFactory(new PropertyValueFactory<>("TenSach"));
-        colLoaiSach.setCellValueFactory(new PropertyValueFactory<>("TenLoaiSach"));
-        colKieuSach.setCellValueFactory(new PropertyValueFactory<>("KieuSach"));
-        colTacGia.setCellValueFactory(new PropertyValueFactory<>("TenTacGia"));
-        colNXB.setCellValueFactory(new PropertyValueFactory<>("TenNXB"));
-        colNgayNhap.setCellValueFactory(new PropertyValueFactory<>("NgayNhap"));
-        colSoLuong.setCellValueFactory(new PropertyValueFactory<>("SoLuong"));
+        colMaSach.setCellValueFactory(new PropertyValueFactory<>("maSach"));
+        colTenSach.setCellValueFactory(new PropertyValueFactory<>("tenSach"));
+        colLoaiSach.setCellValueFactory(new PropertyValueFactory<>("tenLoaiSach"));
+        colKieuSach.setCellValueFactory(new PropertyValueFactory<>("kieuSach"));
+        colTacGia.setCellValueFactory(new PropertyValueFactory<>("tenTacGia"));
+        colNXB.setCellValueFactory(new PropertyValueFactory<>("tenNXB"));
+        colNgayNhap.setCellValueFactory(new PropertyValueFactory<>("ngayNhap"));
+        colSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
 
         TableColumn<SachViewModel, SachViewModel> colXoa = new TableColumn<>("");
         colXoa.setSortable(false);
@@ -459,8 +501,8 @@ public class QuanLySachController implements Initializable {
     }
 
     private void initTableViewLoaiSach() {
-        colLoaiSachLS.setCellValueFactory(new PropertyValueFactory<>("TenLoaiSach"));
-        colKieuSachLS.setCellValueFactory(new PropertyValueFactory<>("KieuSach"));
+        colLoaiSachLS.setCellValueFactory(new PropertyValueFactory<>("tenLoaiSach"));
+        colKieuSachLS.setCellValueFactory(new PropertyValueFactory<>("kieuSach"));
         TableColumn<LoaiSach, Boolean> colXoaLS = new TableColumn<>("Xoá");
         colXoaLS.setEditable(true);
 
@@ -485,7 +527,7 @@ public class QuanLySachController implements Initializable {
     }
 
     private void initTableViewTacGia() {
-        colTenTacGiaTG.setCellValueFactory(new PropertyValueFactory<>("TenTacGia"));
+        colTenTacGiaTG.setCellValueFactory(new PropertyValueFactory<>("tenTacGia"));
         TableColumn<TacGia, Boolean> colXoaTG = new TableColumn<>("Xoá");
         colXoaTG.setEditable(true);
 
@@ -510,9 +552,9 @@ public class QuanLySachController implements Initializable {
     }
 
     private void initTableViewNXB() {
-        colTenNXBNXB.setCellValueFactory(new PropertyValueFactory<>("TenNXB"));
-        colDiaChiNXB.setCellValueFactory(new PropertyValueFactory<>("DiaChi"));
-        colSdtNXB.setCellValueFactory(new PropertyValueFactory<>("SDT"));
+        colTenNXBNXB.setCellValueFactory(new PropertyValueFactory<>("tenNXB"));
+        colDiaChiNXB.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
+        colSdtNXB.setCellValueFactory(new PropertyValueFactory<>("sDT"));
 
         TableColumn<NhaXuatBan, Boolean> colXoaNXB = new TableColumn<>("Xoá");
         colXoaNXB.setEditable(true);

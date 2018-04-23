@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="1219.0" style="-fx-background-color: #FAFAFB;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.TraSachController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1208.0" spacing="5.0">
+         <children>
+            <Label text="Mã độc giả">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="txtMaDG" prefHeight="25.0" prefWidth="215.0" />
+            <Label text="Họ tên độc giả" />
+            <TextField fx:id="txtTenDG" prefHeight="25.0" prefWidth="297.0" />
+            <Label prefHeight="17.0" prefWidth="66.0" text="Ngày mượn" />
+            <DatePicker fx:id="dpkNgayMuon" />
+            <Button fx:id="btnTim" mnemonicParsing="false" onAction="#onClickTim" text="Tìm" />
+         </children>
+      </HBox>
+      <HBox prefHeight="511.0" prefWidth="1209.0">
+         <children>
+            <VBox prefHeight="511.0" prefWidth="767.0">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <children>
+                  <TableView fx:id="tbvPhieuMuon" onMouseClicked="#onSelectPhieuMuon" prefHeight="536.0" prefWidth="655.0">
+                    <columns>
+                      <TableColumn fx:id="colMaDG" prefWidth="239.0" text="Mã độc giả" />
+                      <TableColumn fx:id="colTenDG" prefWidth="195.0" text="Tên độc giả" />
+                        <TableColumn fx:id="colNgayMuon" prefWidth="81.0" text="Ngày mượn" />
+                        <TableColumn fx:id="colNgayTra" prefWidth="77.0" text="Ngày trả" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox prefHeight="525.0" prefWidth="562.0">
+               <children>
+                  <TableView fx:id="tbvSachMuon" prefHeight="547.0" prefWidth="478.0">
+                    <columns>
+                      <TableColumn fx:id="colMaSach" prefWidth="230.0" text="Mã sách" />
+                      <TableColumn fx:id="colTenSach" prefWidth="287.0" text="Tên sách" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets left="72.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="1209.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="33.0" onMouseClicked="#onClickBackHome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/home-circle.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

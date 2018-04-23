@@ -87,6 +87,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Button>
+                              <Button fx:id="btnThemAnh" mnemonicParsing="false" onAction="#onClickThemAnh" text="Thêm ảnh" visible="false" />
                            </children>
                         </HBox>
                         <HBox alignment="BOTTOM_LEFT" prefHeight="47.0" prefWidth="320.0">

@@ -11,34 +11,34 @@ package model;
  */
 public class TacGiaViewModel {
 
-    private int Id;
-    private String TacGia;
+    private int id;
+    private String tacGia;
 
     /**
      * @return the Id
      */
     public int getId() {
-        return Id;
+        return id;
     }
 
     /**
      * @param Id the Id to set
      */
     public void setId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     /**
      * @return the TacGia
      */
     public String getTacGia() {
-        return TacGia;
+        return tacGia;
     }
 
     /**
      * @param TacGia the TacGia to set
      */
     public void setTacGia(String TacGia) {
-        this.TacGia = TacGia;
+        this.tacGia = TacGia;
     }
 }

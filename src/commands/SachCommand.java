@@ -61,7 +61,7 @@ public class SachCommand {
             prep.setInt(7, sach.getSoLuong());
             prep.executeUpdate();
             connect.close();
-            Dialog.infoBox("Sửa sách thành công", "Thành công", null);
+            Dialog.infoBox("Thêm sách thành công", "Thành công", null);
             return true;
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -92,7 +92,7 @@ public class SachCommand {
             prep.setInt(8, sach.getId());
             prep.executeUpdate();
             connect.close();
-            Dialog.infoBox("Thêm sách thành công", "Thành công", null);
+            Dialog.infoBox("Sửa sách thành công", "Thành công", null);
             return true;
         } catch (Exception e) {
             System.out.println("Error: " + e);

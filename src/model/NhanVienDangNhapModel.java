@@ -11,64 +11,64 @@ package model;
  */
 public class NhanVienDangNhapModel {
 
-    private String TenDangNhap;
-    private String Ho;
-    private String TenLot;
-    private String Ten;
+    private String tenDangNhap;
+    private String ho;
+    private String tenLot;
+    private String ten;
 
     /**
      * @return the TenDangNhap
      */
     public String getTenDangNhap() {
-        return TenDangNhap;
+        return tenDangNhap;
     }
 
     /**
      * @param TenDangNhap the TenDangNhap to set
      */
     public void setTenDangNhap(String TenDangNhap) {
-        this.TenDangNhap = TenDangNhap;
+        this.tenDangNhap = TenDangNhap;
     }
 
     /**
      * @return the Ho
      */
     public String getHo() {
-        return Ho;
+        return ho;
     }
 
     /**
      * @param Ho the Ho to set
      */
     public void setHo(String Ho) {
-        this.Ho = Ho;
+        this.ho = Ho;
     }
 
     /**
      * @return the TenLot
      */
     public String getTenLot() {
-        return TenLot;
+        return tenLot;
     }
 
     /**
      * @param TenLot the TenLot to set
      */
     public void setTenLot(String TenLot) {
-        this.TenLot = TenLot;
+        this.tenLot = TenLot;
     }
 
     /**
      * @return the Ten
      */
     public String getTen() {
-        return Ten;
+        return ten;
     }
 
     /**
      * @param Ten the Ten to set
      */
     public void setTen(String Ten) {
-        this.Ten = Ten;
+        this.ten = Ten;
     }
 }

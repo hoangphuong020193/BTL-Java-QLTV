@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="798.0" style="-fx-background-color: #FAFAFB;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.ThongKeController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="788.0" spacing="10.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="42.0" text="Loại" />
+            <ComboBox fx:id="cbbLoai" onAction="#onClickLoai" prefWidth="150.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="788.0" spacing="10.0">
+         <children>
+            <Label text="Từ ngày" />
+            <DatePicker fx:id="dpkFrom" prefHeight="25.0" prefWidth="150.0" />
+            <Label text="Đến ngày" />
+            <DatePicker fx:id="dpkTo" prefHeight="25.0" prefWidth="150.0" />
+            <Label text="Số lượng" />
+            <TextField fx:id="txtSoLuong" disable="true" prefHeight="25.0" prefWidth="64.0" text="10" />
+            <Button fx:id="btnXem" mnemonicParsing="false" onAction="#onClickXem" text="Xem" />
+         </children>
+      </HBox>
+      <StackPane fx:id="stackPane" prefHeight="422.0" prefWidth="788.0" />
+      <HBox prefHeight="50.0" prefWidth="788.0">
+         <children>
+            <ImageView fitHeight="26.0" fitWidth="27.0" onMouseClicked="#onClickBackHome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/home-circle.png" />
+               </image>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

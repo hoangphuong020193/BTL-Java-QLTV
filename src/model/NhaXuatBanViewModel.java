@@ -11,34 +11,34 @@ package model;
  */
 public class NhaXuatBanViewModel {
 
-    private int Id;
-    private String TenNXB;
+    private int id;
+    private String tenNXB;
 
     /**
      * @return the Id
      */
     public int getId() {
-        return Id;
+        return id;
     }
 
     /**
      * @param Id the Id to set
      */
     public void setId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     /**
      * @return the TenNXB
      */
     public String getTenNXB() {
-        return TenNXB;
+        return tenNXB;
     }
 
     /**
      * @param TenNXB the TenNXB to set
      */
     public void setTenNXB(String TenNXB) {
-        this.TenNXB = TenNXB;
+        this.tenNXB = TenNXB;
     }
 }

@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.io.File;
 import java.sql.Date;
 
 /**
@@ -22,6 +23,7 @@ public class Sach {
     private Date NgayNhap;
     private int SoLuong;
     private Boolean Xoa;
+    private File Anh;
 
     /**
      * @return the Id
@@ -147,5 +149,19 @@ public class Sach {
      */
     public void setXoa(Boolean Xoa) {
         this.Xoa = Xoa;
+    }
+
+    /**
+     * @return the Anh
+     */
+    public File getAnh() {
+        return Anh;
+    }
+
+    /**
+     * @param Anh the Anh to set
+     */
+    public void setAnh(File Anh) {
+        this.Anh = Anh;
     }
 }

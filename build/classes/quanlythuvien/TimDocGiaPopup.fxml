@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quanlythuvien.TimDocGiaPopupController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="590.0" spacing="10.0">
+         <children>
+            <Label text="Mã độc giả" />
+            <TextField fx:id="txtMaDG" />
+            <Label text="Họ tên" />
+            <TextField fx:id="txtHoTenDG" />
+            <Button fx:id="btnTim" mnemonicParsing="false" onAction="#onClickTim" text="Tìm" />
+            <Button fx:id="btnHuy" mnemonicParsing="false" onAction="#onClickHuy" text="Huỷ" />
+            <Button fx:id="btnChon" disable="true" mnemonicParsing="false" onAction="#onClickChon" text="Chọn" />
+         </children>
+      </HBox>
+      <TableView fx:id="tbvDocGia" onMouseClicked="#onSelectDocGia" prefHeight="360.0" prefWidth="590.0">
+        <columns>
+          <TableColumn fx:id="colMaDG" prefWidth="128.0" text="Mã độc giả" />
+          <TableColumn fx:id="colHotenDG" prefWidth="461.0" text="Họ tên độc giả" />
+        </columns>
+      </TableView>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
